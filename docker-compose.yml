@@ -1,8 +1,22 @@
+# Voucher Service — proceso Spring + mailpit (servidor SMTP de pruebas, UI en :8025).
+
 services:
   mailpit:
     image: axllent/mailpit:latest
     container_name: w2m-virtual-mailpit
+    restart: unless-stopped
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  app:
+    build: .
+    container_name: w2m-virtual-voucher-service
     restart: unless-stopped
+    depends_on:
+      - mailpit
+    environment:
+      MAIL_HOST: ${MAIL_HOST:-mailpit}
+      MAIL_PORT: ${MAIL_PORT:-1025}
+    ports:
+      - "${APP_PORT:-8085}:8085"
