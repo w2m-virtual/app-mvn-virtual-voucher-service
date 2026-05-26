@@ -14,7 +14,10 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of(
+        cfg.setAllowedOriginPatterns(List.of(
+                "https://*.w2m.local:[*]",
+                "http://*.w2m.local:[*]",
+                "http://localhost:[*]",
                 "http://localhost:8080",
                 "http://localhost:8081",
                 "http://localhost:4200"
